@@ -1,0 +1,38 @@
+{
+  "name": "school",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode=development",
+    "prod": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/studyingJM/School.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/studyingJM/School/issues"
+  },
+  "homepage": "https://github.com/studyingJM/School#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "css-loader": "^4.2.1",
+    "file-loader": "^6.0.0",
+    "style-loader": "^1.2.1",
+    "url-loader": "^4.1.0",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        input {
+            width: 80%;
+            padding: 8px 12px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" @keyup.13="keyupHandle" v-model="msg"><br>
+        MSG : <span v-html="msg"></span>
+        <a :href="link">링크</a>
+
+    </div>
+
+    <script>
+        let app = new Vue({
+            el:"#app",
+            data: {
+                msg:'',
+                link: 'http://www.naver.com'
+            },
+            methods: {
+                keyupHandle() {
+                    this.msg = event.target.value;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

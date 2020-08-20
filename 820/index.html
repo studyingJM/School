@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>회원가입</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="id"><br>
+        <span v-if="id.length > 8">아이디는 8글자 이내여야 합니다.</span><br>
+        <input type="text" v-model="name"><br>
+        <span v-if="name.length > 4">이름은 4글자 이내여야 합니다</span> <br>
+        <input type="text" v-model="phone"> <br>
+        <span v-if="phone == ''">공백이면 안됩니다.</span> <br>
+        <select v-model="com">
+            <option v-for="list in company" :value="list.value">{{list.name}}</option>
+        </select>
+        <br>
+        <input type="password" v-model="password"> <br>
+        <input type="password" v-model="passwordc"> <br>
+        <span v-if="password != passwordc">비밀번호가 같지 않습니다.</span>
+        <!--
+            선택한 통신사를 저장할 수 있는 변수를 data에 추가해라.
+        -->
+        <br><button v-if="check" @click="print">정보출력</button>
+    </div>
+
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                id:'',
+                name:'',
+                phone:'',
+                company:[
+                    {value:"skt", name:"SK텔레콤"},
+                    {value:"kt", name:"올레KT"},
+                    {value:"lgu", name:"LG U+"},
+                    {value:"mvno", name:"알뜰폰"}
+                ],
+                com:'',
+                password:'',
+                passwordc:''
+            },
+            methods:{
+                print(){
+                    
+                    let msg = `id: ${this.id}, name : ${this.name}, phone : ${this.phone},`;
+                    msg += `password : ${this.password}, company : ${this.com}`
+                    console.log(msg);
+                }
+            },
+            computed: {
+                check(){
+                    if(this.id.length > 8) return false;
+                    if(this.phone == '') return false;
+                    if(this.password == '' || this.passwordc == '') return false;
+                    if(this.password != this.passwordc) return false;
+
+                    return true;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

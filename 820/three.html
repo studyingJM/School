@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <span>여러줄 메시지</span>
+        <p v-html="change"></p>
+        <textarea cols="30" rows="10" v-model="msg" ></textarea>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el:"#app",
+            data: {
+                msg: ''
+            },
+            methods: {
+
+            },
+            computed: {
+                change() {
+                    return this.msg.split('\n').join('<br>');
+                }
+            }
+        });
+    </script>
+
+    <!-- 
+        v-model : 실시간으로 보여주는것
+        {{}} : data에 있는 값
+        v-html : 일반텍스트로 데이터로 해석
+        computed : 계산된 값을 출력하는 용도
+
+        computed와 methods와의 차이점
+        1. template에서 호출시 ()를 적지 않아야 된다.
+
+        2. return 값이 반드시 존재해야한다.
+
+        3, 파라메터를 받을 수 없다.
+        
+        computed - template내부에 선언된 computed중에서 해당 함수와 연결된 값이 바뀔 때만 해당 함수만을 실행한다.
+        methods -그런거 모르겠고  template내부에 선언된 methods중에서 update라이프사이클이 동작한(=아무 변수나 바뀐)다면 함수를 모두 실행한다.
+    -->
+</body>
+</html>

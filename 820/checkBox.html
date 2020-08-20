@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="checkbox" value="gondr" v-model="hobbies">곤달
+        <input type="checkbox" value="programing" v-model="hobbies">프로그래밍
+        <input type="checkbox" value="cook" v-model="hobbies">요리
+        <ul>
+            <li v-for="hobby in hobbies">{{hobby}}</li>
+        </ul>
+    </div>
+
+    <div id="app2">
+        <div>
+            <input type="radio" v-model='picked' value="One"> ONE
+            <input type="radio" v-model='picked' value="Two"> TWO
+            <input type="radio" v-model='picked' value="Three"> Three
+            <span>{{picked}}</span>
+        </div>
+        <div>
+            <select v-model="selected">
+                <option v-for='a in item' :value="a.value">{{a.name}}</option>
+            </select>
+            <span>{{selected}}</span>
+        </div>
+    </div>
+
+    <script>
+        let app = new Vue({
+            el: "#app",
+            data: {
+                hobbies:[],
+
+            },
+            methods: {
+
+            },
+            computed: {
+                
+            }
+        });
+        let app2 = new Vue({
+            el: '#app2',
+            data: {
+                picked:'',
+                selected:'',
+                item: [
+                    {value:'js', name:"자바스크립트"},
+                    {value:'php', name:"피애치피"},
+                    {value:'java', name:"자바"},
+                ]
+            },
+        })
+    </script>
+</body>
+</html>
