@@ -34,6 +34,9 @@ app.get('/getData', (req,res) => {
         }
     });
 });
+app.get('/counter', (req,res) => {
+    res.render('props');
+})
 
 server.listen(app.get('port'), () => 
 {

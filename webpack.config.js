@@ -1,24 +1,34 @@
 const path = require('path');
-const { resolve } = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
-    entry: path.join(__dirname, 'app.js'),
-    output: {
-        filename: 'dist.js',
-        path: path.join(__dirname, 'dist')
+    entry: {
+        dist: path.join(__dirname, 'app.js'),
+        prop: path.join(__dirname, 'prop.js')
     },
-    module: {
+    output: {
+        filename: '[name].js',
+        path: path.join(__dirname, 'public')
+    },
+    module:{
         rules: [
             {
-                test:/\%.css$/,
+                test:/\.css$/,
                 use:['style-loader', 'css-loader']
+            },
+            {
+                test:/\.vue$/,
+                loader:'vue-loader'
             }
         ]
     },
-    resolve: {
+    resolve:{
         alias: {
             "vue$": "vue/dist/vue.esm.js"
         },
         extensions:['*', '.js', '.vue', '.json']
-    }
+    },
+    plugins:[
+        new VueLoaderPlugin()
+    ]
 }

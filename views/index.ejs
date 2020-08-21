@@ -3,15 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
+    <title>Document</title>
     <script src="/dist.js"></script>
+    <style>
+        .box {
+            width:100px;
+            height: 100px;
+            transition:all 1s;
+            background-color: #fff;
+        }
+        .box {
+            width:50px;
+            height:50px;
+            background-color: #fff;
+            border:1px solid #ddd;
+        }
+        .red {
+            background-color: #f00;
+        }
+        .green {
+            background-color: rgb(54, 175, 94);
+        }
+    </style>
 </head>
 <body>
     <div id="app">
+        <my-hello>
+            <div slot="header">이 글은 헤더에 써집니다.</div>
+            <p>이 글은 섹션에 들어가게 됩니다.</p>
+            <p>이 글은 섹션에 들어가게 됩니다.</p>
+            <p>이 글은 섹션에 들어가게 됩니다.</p>
+            <div slot="footer">이 글은 푸터에 들어가게 됩니다.</div>
+        </my-hello>
+        <my-hello>
+            <p>안녕하세요?</p>
+        </my-hello>
         <div v-if="items.length == 0">
             <h2>아이템을 불러오는 중입니다.</h2>
         </div>
         <div class="item" v-for="item in items" :key="item.id">{{item.name}}</div>
+        
+        <div class="box" :class="boxClassObj" :style="boxStyleObj">
+            
+        </div>
+        <input type="checkbox" v-model="red"> Red
+        <input type="checkbox" v-model="green"> Green
+        <button @click="changeClass">변경</button>
     </div>
+
 </body>
 </html>

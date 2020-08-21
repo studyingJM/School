@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode=development",
-    "prod": "webpack --mode=production"
+    "prod": "webpack --mode=production",
+    "watch": "webpack --watch",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
   "devDependencies": {
     "css-loader": "^4.2.1",
     "file-loader": "^6.0.0",
+    "nodemon": "^2.0.4",
     "style-loader": "^1.2.1",
     "url-loader": "^4.1.0",
     "vue-loader": "^15.9.3",
