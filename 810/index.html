@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASYNC</title>
+</head>
+<body>
+    ASYNC 비동기적인
+    <script>
+        let a = 10;
+        let b;
+        //res : O , rej : 서버터졌을때.
+        function two() {
+            return new Promise( (res,rej) => {
+                        setTimeout( () => { console.log("2초 후"); res(40); }, 2000);
+                    });
+        }
+
+        // p.then( d => {
+        //     console.log( a + b );
+        // });
+        //프로미스에서 resolve가 걸릴때까지 대기
+
+        async function test() {
+            let a = await two();
+            let b = await two();
+            console.log(a + b);
+        }
+
+        test();
+
+    </script>
+</body>
+</html>

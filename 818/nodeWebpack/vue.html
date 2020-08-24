@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .gondr-enter-active, .gondr-leave-active {
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        
+        .gondr-leave {
+            transition: opacity;
+        }
+
+        .gondr-enter, .gondr-leave-to {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="app1">
+        앱1 입니다.
+        <!-- <p v-show="gondr">1</p> display:none -->
+        <!-- <p v-if("?")>dasdasdsa</p> dom에서 삭제 -->
+        <button v-on:click="gondr = !gondr">변경</button>
+    </div>
+    <div id="app2">
+        앱2 입니다.
+    </div>
+    <script>
+        let app1 = new Vue({
+            el: '#app1',
+            data: {
+                gondr: true,
+                msg:"안녕하세요",
+            }
+        });
+    </script>
+</body>
+</html>

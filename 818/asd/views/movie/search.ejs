@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <%- include('../include/head'); -%>
+<body>
+    <header>
+        <%- include('../include/header') -%>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-10 offset-1">
+                <h2>영화 DB에 추가</h2>
+                <p> 1: 드라마 2: 판타지
+                    3: 서부 4: 공포
+                    5: 로맨스 6: 모험
+                    7: 스릴러 8: 느와르
+                    9: 컬트 10: 다큐멘터리
+                    11: 코미디 12: 가족
+                    13: 미스터리 14: 전쟁
+                    15: 애니메이션 16: 범죄
+                    17: 뮤지컬 18: SF
+                    19: 액션20: 무협
+                    21: 에로 22: 서스펜스
+                    23: 서사 24: 블랙코미디
+                    25: 실험 26: 영화카툰
+                    27: 영화음악 28: 영화패러디포스터</p>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-5 offset-1">
+                <form action="/movie" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="검색어를 입력해주세요" name="word">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary">검색</button>
+                            <select name="genre" id="genre">
+                                <% for(let i = 1; i <= 28; i++) { %>
+                                    <option value="<%= i %>"><%- i %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <% if (locals.list !== undefined) { %>
+            <div class="row">
+                <div class="col-10 offset-1">
+                    <div class="row">
+                    <% list.forEach( item => { %>
+                        <div class="card col-3">
+                            <% if(item.image != '') { %>
+                                <img src="<%= item.image %>" alt="movie image">
+                            <% } %>
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <a href="<%- item.link %>"><%- item.title %></a></div>
+                                <div class="card-text">
+                                    <span class="badge badge-primary"><%= item.subtitle %></span>
+                                    <span class="badge badge-info"><%= item.actor %></span>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+    <%- include('../include/footer') -%>    
+</body>
+</html>

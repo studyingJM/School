@@ -1,0 +1,3 @@
+npm install --save express ejs body-paser mysql express-session multer
+
+multer : 파일 저장, 업로드

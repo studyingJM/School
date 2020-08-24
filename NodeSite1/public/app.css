@@ -1,0 +1,14 @@
+body {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: minmax(60px,110px) 1fr 60px;
+}
+
+footer {
+    background-color: #28a745;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 28px;
+}
