@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computed</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>원래 값은 count {{count}}</p>
+        <p>2배 증가 Computed: {{double}}</p>
+        <p>3배 증가 methods: {{triple()}}</p>
+        <button @click="count++">원래 값 출력</button>
+        <p>새로운 값은 newCount : {{newCount}}</p>
+        <button @click="newCount++">새로운 값 증가</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                count: 0,
+                newCount: 0,
+            },
+            methods: {
+                triple() {
+                    console.log('methods result');
+                    return this.count * 3;
+                }
+            },
+            computed: {
+                double() {
+                    console.log('computed result');
+                    return this.count * 2;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

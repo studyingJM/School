@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-bind:style="headingStyles">여러개의 스타일 적용</h1>
+        <h1 v-bind:class="{'applycolor': applycolor}">동적</h1>
+        <input type="checkbox" v-model="applycolor">
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                applycolor:false,
+                headingStyles: {
+                    color: 'test',
+                    fontSize: '48px',
+                    textAlign: 'center'
+                }
+            }
+        });
+    </script>
+
+    <style>
+        .applycolor {
+            color: blue;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>내가 가고 싶은 나라들</h1>
+        <div class="imgdiv" v-for="item in imgs" :key='item.src'>
+            <a :href="item.url"  target='_blank'>{{item.title}}</a>
+            <img :src="item.src" alt="1번 그림" width="100" height="100">
+        </div>
+        <!-- <div class="imgdiv">
+            <a target='_blank'>2번그림</a>
+            <img src="2.jpg" alt="2번 그림" width="100" height="100">
+        </div>
+        <div class="imgdiv">
+            <a target='_blank'>3번그림</a>
+            <img src="3.jpg" alt="2번 그림" width="100" height="100">
+        </div>
+        <div class="imgdiv">
+            <a target='_blank'>4번그림</a>
+            <img src="4.jpg" alt="3번 그림" width="100" height="100">
+        </div> -->
+    </div>
+
+    <script>
+        new Vue({
+            el:'#app',
+            data: {
+                imgs: [
+                    {title:'1번그림', src:'1.jpg', url:'https://www.naver.com'},
+                    {title:'2번그림', src:'2.jpg', url:'#'},
+                    {title:'3번그림', src:'3.jpg', url:'#'},
+                    {title:'4번그림', src:'4.jpg', url:'#'}
+                ]
+            },
+            methods: {
+
+            }
+        });
+    </script>
+
+    <style>
+        .imgdiv {
+            margin: 4px;
+            border: 1px solid black;
+            display: inline-block;
+        }
+        img {
+            width: 240px;
+            height: 180px;
+            padding: 3px;
+        }
+        a {
+            text-align: center;
+            display: block;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구구단</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <form @submit="checkResult">
+            <label>{{num1}} X {{num2}}</label>
+            <input type="number" v-model='answer' ref="user_num"> <br>
+            <input type="submit" value="확인">
+        </form>
+        <p>{{result}}</p>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                num1: Math.ceil((Math.random() * 8) + 1),
+                num2: Math.ceil((Math.random() * 9)),
+                answer: '',
+                result: null
+            },
+            methods: {
+                checkResult(e) {
+                    e.preventDefault();
+                    if(parseInt(this.answer) === (this.num1 * this.num2)) {
+                        this.result = '정답';
+                        this.resetGame();
+                    }else {
+                        this.result = '다시 생각하세요';
+                        this.answer = ''
+                    }
+                },
+                resetGame() {
+                    this.num1 = Math.ceil((Math.random() * 8) + 1),
+                    this.num2 = Math.ceil((Math.random() * 9)),
+                    this.answer = '',
+                    this.$refs.user_num.focus();
+                }
+                
+            }
+        });
+    </script>
+</body>
+</html>
