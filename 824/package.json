@@ -1,0 +1,35 @@
+{
+  "name": "824",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode=development",
+    "prod": "webpack --mode=production",
+    "watch": "webpack --watch",
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "vue": "^2.6.12"
+  },
+  "devDependencies": {
+    "css-loader": "^4.2.1",
+    "file-loader": "^6.0.0",
+    "nodemon": "^2.0.4",
+    "style-loader": "^1.2.1",
+    "url-loader": "^4.1.0",
+    "vue-loader": "^15.9.3",
+    "vue-router": "^3.4.3",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "wepack-cli": "0.0.1-security"
+  }
+}
