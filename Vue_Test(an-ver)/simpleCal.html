@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>간단한 계산기</h1>
+        <input type="number" v-model.number="num1">
+        <select v-model="select">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="number" v-model.number="num2">
+        <button @click="aresult" >=</button>
+        <label>{{result}}</label>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                num1 : '',
+                select: '',
+                num2 : '',
+                result : 0,
+            },
+            methods: {
+                aresult() {
+                    if(this.select === '+') {
+                        this.result = this.num1 + this.num2;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

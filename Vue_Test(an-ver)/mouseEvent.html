@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div @contextmenu.prevent="ctxStop"
+            @mouseup.left="leftMouse"
+            @mouseright="rightMouse"
+        >
+        left Click : left <br>
+        right Click : right <br>
+        <img src="foot.jpg" alt="1번그림" :style="{ position: 'absolute', left: pos.left + 'px' }">
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                pos : {left : 100}
+            },
+            methods: {
+                ctxStop : (e) => {},
+                leftMouse : () => {
+                    if( this.pos.left > 30) this.pos.left -= 30;
+                    console.log('Move left');
+                },
+                rightMouse(e) {
+                    this.pos.left += 30;
+                    console.log("Move right");
+                }
+            }
+        });
+    </script>
+    <style>
+
+    </style>
+</body>
+</html>

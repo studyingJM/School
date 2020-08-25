@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>입력폼 활용</h1>
+        이름 : <input type="text" v-model.lazy="name"> <br>
+        좋아하는 색 : <br>
+        <div v-if="name.length > 0">
+            빨강 : <input type="radio" value="red" v-model="check"> <br>
+            녹색 : <input type="radio" value="green" v-model="check"> <br>
+            파랑색 : <input type="radio" value="blue" v-model="check"> <br>
+            노란색 : <input type="radio" value="yellow" v-model="check"> <br>
+            회색 : <input type="radio" value="gray" v-model="check"> <br>
+            <p :style="{color: check}">내 이름 {{name}} 좋아하는 색 {{check}}</p>
+        </div>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                check: []
+            },
+            methods: {
+
+            }
+        });
+    </script>
+</body>
+</html>

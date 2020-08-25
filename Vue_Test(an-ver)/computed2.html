@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>computed - 글자수 세기</h1>
+        <textarea cols="30" rows="10" v-model="text" placeholder="감상은 50자 이내로 써주세요"></textarea> <br>
+        <span :style="{color: changeColor}">남은 글자는 {{count}} 입니다.</span>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                text: '',
+                cnt: 50,
+                color: [
+                    'red','blue','green'
+                ]
+            },
+            methods: {
+
+            },
+            computed: {
+                count() {
+                    return this.cnt - this.text.length;
+                },
+                changeColor() {
+                    col = 'gray'
+                    if(this.count < 40) {
+                        col = 'green'
+                    }
+                    if(this.count < 30) {
+                        col = 'blue'
+                    }
+                    if(this.count < 0) {
+                        col = 'red'
+                    }
+                    return col;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
