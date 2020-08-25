@@ -1,10 +1,9 @@
 <template>
     <div>
         <h1>여기는 {{title}} 컴포넌트입니다.</h1>
+       
         <div class="list">
-            <div class="item" v-for="item in list" :key='item.id'>
-                {{ item.title }} <span class="date">{{item.date}}</span>
-            </div>
+            <item-compo v-for="item in list" :key="item.id" :item="item" @delete="delItem"></item-compo>
         </div>
     </div>
 </template>
@@ -12,35 +11,41 @@
 <style scoped>
     .list {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: 100px;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-auto-rows: 200px;
         gap:20px;
-        width: 800px;
+        width:800px;
     }
-    .item {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        padding: 10px;
-        box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
-        border-radius: 5px;
-    }
+
+    
 </style>
 
-//컴포넌트란? : 웹페이지의 작은 조각들
 <script>
+import ItemCompo from '@/components/ItemComponent';
+
 export default {
-    name:'listComp',
-    data() {
+    name:'listCompo',
+    components:{
+        'item-compo':ItemCompo
+    },
+    data(){
         return {
-            title: '리스트',
-            list: [],
+            title:'리스트',
+            list:[]
         }
     },
-    beforeMount() {
+    methods:{
+        delItem(e, data, id){
+            if(data.success) {
+                let idx = this.list.findIndex( x => x.id == data.id);
+                this.list.splice(idx,1);
+            }
+            this.$parent.openToast(data.msg);
+        }
+    },
+    beforeMount(){
         axios.get('/api/todo').then(res => {
             this.list = res.data;
-            console.log(this.list);
         });
     }
 }
