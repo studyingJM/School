@@ -31,28 +31,56 @@
 <script>
 export default {
     name:'writeCompo',
+    props:['id'],
     data(){
         return {
-            id:0,
             title:'글쓰기',
             mode:'write',
             todoData:{
                 title:'',
                 content:'',
                 date:''
-            }
+            },
         }
+    },
+    beforeMount() {
+        this.changeForm();
+        if(this.mode === 'mod') {
+            axios.get(`/api/todo/view?id=${this.id}`).then( res =>{
+                const data = res.data;
+                let {title,content, date} = data.todo;
+                date = date.formatDate();
+                this.todoData = {title,content, date};
+            });
+        }
+    },
+    beforeUpdate() {
+        this.changeForm();
+
     },
     methods:{
         submit(){
             let {title, content, date} = this.todoData;
+            let sendData = {title,content, date}
+            if(this.id !== undefined) {
+                sendData.id = this.id;
+            }
             axios.post('/api/todo', {title, content, date}).then( res => {
                 const data = res.data;
                 if(data.success){
                     this.$router.push('/'); //리스트 페이지로 이동
                 }
                 this.$parent.openToast(data.msg);
-            })
+            });
+        },
+        changeForm() {
+            if(this.id !== undefined) {
+                this.mode = 'mod';
+                this.title = '글 수정';
+            }else {
+                this.mode = 'write';
+                this.title = '글 작성';
+            }
         }
     }
 }
