@@ -5,6 +5,7 @@ import ListCompo from '@/components/ListComponent';
 import WriteCompo from '@/components/WriteComponent';
 import ViewCompo from '@/components/ViewComponent';
 import LoginCompo from '@/components/LoginComponent';
+import CalendarCompo from '@/components/CalendarComponent';
 
 Vue.use(Router); //vue가 SPA를 위해 라우팅을 사용하겠다는 뜻
 
@@ -15,7 +16,12 @@ export default new Router({
         {
             path:'/',
             name:'list-page',
-            component:ListCompo
+            component:ListCompo,
+        },
+        {
+            path:'/calendar',
+            name:'calendar-page',
+            component: CalendarCompo
         },
         {
             path:'/write',

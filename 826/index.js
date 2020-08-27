@@ -6,7 +6,7 @@ const app = new express();
 const server = http.createServer(app);
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const cookieSecret = "yydh";
+const cookieSecret = "kjimin2123";
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -28,18 +28,32 @@ app.get('/', (req, res) => {
 }); 
 
 app.get('/api/todo', async (req, res)=> {
-    let list = await query("SELECT * FROM todos ORDER BY id DESC", []);
+    if(req.session.user === undefined){
+        res.json([]);    
+        return;
+    }
+    const user = req.session.user;
+    let list = await query("SELECT * FROM todos WHERE owner = ? ORDER BY id DESC", [user.id]);
     res.json(list);
 });
 
 app.post('/api/todo', async (req, res)=>{
     let {title, content, date, id} = req.body;
+    if(req.session.user === undefined){
+        res.status(403).json({msg:'권한이 없습니다'});
+        return;
+    }
     try{
         if(id === undefined){
-            await query("INSERT INTO todos (title, content, date, owner) VALUES (?, ?, ?, 'gondr')", [title, content, date]);
+            await query("INSERT INTO todos (title, content, date, owner) VALUES (?, ?, ?, ?)", [title, content, date, req.session.user.id]);
             res.json({msg:'성공적으로 글 작성완료', success:true});
         }else {
             //현재 로그인된 유저가 이 글을 수정할 권한이 있는지를 검사해야해.
+            let data = await query("SELECT * FROM todos WHERE id = ?", [id]);
+            if(data[0].owner !== req.session.user.id){
+                res.status(403).json({msg:'권한이 없습니다'});
+                return; 
+            }
             await query("UPDATE todos SET title = ?, content = ?, date = ? WHERE id = ?", [title, content, date, id]);
             res.json({msg:'성공적으로 글 작성완료', success:true});
         }
@@ -65,6 +79,10 @@ app.get('/api/todo/view', async (req, res)=>{
     let id = req.query.id;
     try {
         let data = await query("SELECT * FROM todos WHERE id = ?", [id]);
+        if(req.session.user === undefined || data[0].owner !== req.session.user.id){
+            res.status(403).json({msg:'권한이 없습니다.'});    
+            return;
+        }
         res.json({msg:'성공적으로 가져왔습니다.', success:true, todo:data[0]});
     }catch (err){
         console.log(err);
@@ -84,12 +102,19 @@ app.post('/api/user', async (req, res)=>{
     }
 });
 
-app.get('/api/user', (req,res) => {
-    if(req.session.user !== undefined) {
+app.get('/api/user', (req, res)=>{
+    if(req.session.user !== undefined){
         res.json({success:true, user:req.session.user});
-    }else {
+    }else{
         res.json({success:false});
     }
+});
+
+app.delete('/api/user', (req, res)=>{
+    if(req.session.user !== undefined){
+        req.session.user = undefined;
+    }
+    res.json({success:true, msg:'로그아웃되었습니다.'});
 });
 
 app.get('/*', (req, res) =>{

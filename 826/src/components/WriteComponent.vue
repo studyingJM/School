@@ -31,7 +31,7 @@
 <script>
 export default {
     name:'writeCompo',
-    props:['id'],
+    props:["id"],
     data(){
         return {
             title:'글쓰기',
@@ -40,47 +40,55 @@ export default {
                 title:'',
                 content:'',
                 date:''
-            },
+            }
         }
     },
-    beforeMount() {
+    beforeMount(){
+        if(this.$parent.loginUser == null){
+            swal.fire('로그인후 사용할 수 있습니다.').then(res =>{
+                this.$router.push('/');
+                return;
+            });
+        }
         this.changeForm();
-        if(this.mode === 'mod') {
-            axios.get(`/api/todo/view?id=${this.id}`).then( res =>{
+        if(this.mode === 'mod'){
+            axios.get(`/api/todo/view?id=${this.id}`).then(res => {
                 const data = res.data;
-                let {title,content, date} = data.todo;
+                let {title, content, date} = data.todo;
                 date = date.formatDate();
-                this.todoData = {title,content, date};
+                this.todoData = {title, content, date};
+            }).catch(err => {
+                swal.fire(err.response.data.msg);
+                this.$router.push('/');
             });
         }
     },
-    beforeUpdate() {
+    beforeUpdate(){
         this.changeForm();
-
     },
     methods:{
+        changeForm(){
+            if(this.id !== undefined){
+                this.mode = 'mod';
+                this.title = '글수정'
+            }else {
+                this.mode = 'write';
+                this.title = '글쓰기';
+            }
+        },
         submit(){
             let {title, content, date} = this.todoData;
-            let sendData = {title,content, date}
-            if(this.id !== undefined) {
+            let sendData = {title, content, date};
+            if(this.id !== undefined){
                 sendData.id = this.id;
             }
-            axios.post('/api/todo', {title, content, date}).then( res => {
+            axios.post('/api/todo', sendData).then( res => {
                 const data = res.data;
                 if(data.success){
                     this.$router.push('/'); //리스트 페이지로 이동
                 }
                 this.$parent.openToast(data.msg);
-            });
-        },
-        changeForm() {
-            if(this.id !== undefined) {
-                this.mode = 'mod';
-                this.title = '글 수정';
-            }else {
-                this.mode = 'write';
-                this.title = '글 작성';
-            }
+            })
         }
     }
 }

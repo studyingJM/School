@@ -2,8 +2,11 @@
     <div>
         <h1>여기는 {{title}} 컴포넌트입니다.</h1>
        
-        <div class="list">
+        <div class="list" v-if="loginUser != null">
             <item-compo v-for="item in list" :key="item.id" :item="item" @delete="delItem"></item-compo>
+        </div>
+        <div class="msg" v-if="loginUser == null">
+            <h2>리스트를 보기 위해선 로그인 하세요</h2>
         </div>
     </div>
 </template>
@@ -17,6 +20,11 @@
         width:800px;
     }
 
+    .msg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     
 </style>
 
@@ -41,12 +49,20 @@ export default {
                 this.list.splice(idx, 1);
             }
             this.$parent.openToast(data.msg);
+        },
+        loadData(){
+            axios.get('/api/todo').then(res => {
+                this.list = res.data;
+            });
+        }
+    },
+    computed:{
+        loginUser(){
+            return this.$parent.loginUser;
         }
     },
     beforeMount(){
-        axios.get('/api/todo').then(res => {
-            this.list = res.data;
-        });
+        this.loadData();
     }
 }
 </script>

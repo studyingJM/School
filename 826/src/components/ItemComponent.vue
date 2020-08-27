@@ -28,11 +28,33 @@ export default {
         }
     },
     methods:{
-        delItem(e){
-            axios.delete(`/api/todo?id=${this.item.id}`).then(res =>{
-                const data = res.data;
-                this.$emit('delete', e, data);
-            });
+        async delItem(e){
+            try {            
+                let result = await swal.fire({
+                    title:'정말 삭제하시겠어요?',
+                    text:'삭제시 되돌릴 수 없습니다.',
+                    icon:'warning',
+                    showCancelButton:true,
+                    confirmButtonText:'네 삭제할께요',
+                    cancelButtonText:'아니요'
+                });
+                if(result.value){
+                    let res = await axios.delete(`/api/todo?id=${this.item.id}`);
+                    const data = res.data;
+                    this.$emit('delete', e, data);
+                    swal.fire({
+                        title:'성공',
+                        text:'삭제되었습니다.',
+                        icon:'success'
+                    });
+                }
+            } catch (err){
+                swal.fire({
+                    title:'실패',
+                    text:'글 삭제중 오류가 발생했습니다.',
+                    icon:'error'
+                });
+            }
         }
     }
 }

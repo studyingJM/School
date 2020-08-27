@@ -10,18 +10,24 @@
                     <li class="nav-item">
                         <router-link class="nav-link" to="/write">글쓰기</router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to='/calendar'>달력</router-link>
+                    </li>
                     <li class="nav-item" v-if="loginUser == null">
                         <router-link class="nav-link" to="/login">로그인</router-link>
                     </li>
                     <li class="nav-item" v-if="loginUser != null">
-                        <a class="nav-link" >로그아웃</a>
+                        <a class="nav-link" @click.prevent="logout" >로그아웃</a>
                     </li>
+
                 </ul>               
                 
             </div>
         </header>
         <section class="content">
-            <router-view></router-view>
+            <transition name="sc" mode="out-in">
+                <router-view></router-view>
+            </transition>
         </section>
         
         <transition name="rlmove">
@@ -29,11 +35,24 @@
                 {{toastMsg}}
             </div>
         </transition>
-        
     </div>
 </template>
 
-<style scoped>
+<style>
+    .sc-enter-active, .sc-leave-active {
+        transition: opacity 0.5s, transform 0.5s;
+    }
+
+    .sc-enter  {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    .sc-leave-to{
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
     .main > * {
         width:100%;
     }
@@ -47,6 +66,7 @@
     .content {
         width:80%;
         margin:20px 0;
+        overflow: hidden;
     }
     .my-toast {
         position: fixed;
@@ -100,6 +120,17 @@ export default {
                 const data = res.data;
                 if(data.success) {
                     this.loginUser = data.user;
+                }
+            });
+        },
+        logout(){
+            axios.delete('/api/user').then(res => {
+                const data = res.data;
+                if(data.success){
+                    this.loginUser = null;
+                    //this.openToast(data.msg);
+                    swal.fire("알림", data.msg, "success");
+                    this.$router.push('/');
                 }
             });
         },

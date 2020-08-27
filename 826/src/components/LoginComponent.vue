@@ -32,7 +32,7 @@ export default {
             this.$parent.openToast("필수값이 공백입니다.");
             return;
         }
-        const {id, password} = this.inputData;
+        const {id, password} = this.inputData; 
         axios.post('/api/user', {id, password}).then(res => {
             const data = res.data;
             if(data.success){

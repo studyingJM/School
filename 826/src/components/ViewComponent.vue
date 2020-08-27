@@ -10,8 +10,8 @@
                         {{todo.content}}
                     </div>
                     <div class="card-footer d-flex justify-content-end">
-                        <router-link :to="`/mod/${todo.id}`" class="btn btn-outline-primary">수정</router-link>
-                        <router-link to="/" class="btn btn-outline-info">목록</router-link>
+                        <router-link :to="`/mod/${todo.id}`" class="btn btn-outline-primary btn-sm mx-2">수정</router-link>
+                        <router-link to="/" class="btn btn-outline-info btn-sm">목록</router-link>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@ export default {
                 this.todo = data.todo;
             }
         });
-    },
+    }
 }
 </script>
 
