@@ -23,6 +23,15 @@ app.use(bodyParser.json());
 
 const {query} = require('./DB');
 
+Date.prototype.toStr = function(){
+    let y = this.getFullYear();
+    let m = `00${this.getMonth() + 1}`;
+    let d = `00${this.getDate()}`;
+    m = m.substr(m.length - 2);
+    d = d.substr(d.length - 2);
+    return `${y}-${m}-${d}`;
+};
+
 app.get('/', (req, res) => {
     res.render('main');
 }); 
@@ -36,6 +45,34 @@ app.get('/api/todo', async (req, res)=> {
     let list = await query("SELECT * FROM todos WHERE owner = ? ORDER BY id DESC", [user.id]);
     res.json(list);
 });
+
+//년도와 월이 넘어온다.
+app.get('/api/todo/list', async (req, res)=>{
+    const {y, m} = req.query;  
+    if(y === undefined || m === undefined){
+        res.json({msg:'잘못된 요청입니다.'});
+        return;
+    }
+
+    if(req.session.user === undefined){
+        res.json({list:[]});
+        return;
+    }
+
+    const start = new Date(y, m , 1); //해당월의 시작일
+    const end = new Date(y, m * 1 + 1, 0); //해당월의 마지막날
+    const user = req.session.user;
+    const sql = "SELECT * FROM todos WHERE owner = ? AND date BETWEEN ? AND ?";
+    try {
+        let result = await query(sql, [ user.id, start.toStr(), end.toStr()]);
+        res.json({list:result})    
+    }catch(err){
+        console.log(err);
+        res.json({list:[], msg:'실패', success:false});
+    }
+    
+});
+
 
 app.post('/api/todo', async (req, res)=>{
     let {title, content, date, id} = req.body;
